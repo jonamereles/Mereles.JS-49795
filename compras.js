@@ -14,6 +14,7 @@ alert(" Tienda MemoDrive");
 nombreApellido = prompt("Por favor, ingrese su nombre y apellido:");
 // saludo 
 alert(`Hola ${nombreApellido}, bienvenido/a !!`);
+
 // precio de gigas
 precios = {
 4: 6,
