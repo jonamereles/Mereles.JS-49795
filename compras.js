@@ -1,58 +1,74 @@
-let nombreApellido;
-let precios;
-let metodoPago;
-let costo;
-let costoTotal = 0;
-let gigas;
-let otraCompra;
-const SI = 'si';
-
 
 // presentacion
-alert(" Tienda MemoDrive");
-// solicitar nombre y apellido
-nombreApellido = prompt("Por favor, ingrese su nombre y apellido:");
-// saludo 
-alert(`Hola ${nombreApellido}, bienvenido/a !!`);
+alert(" Tienda Conser On-Line");
 
-// precio de gigas
-precios = {
-4: 6,
-8: 11,
-16: 14,
-32: 25,
-64: 42,
-128: 70,
-256: 120
-};
-// método de pago
-metodoPago = prompt("Por favor, elija su método de pago: debito, credito, transferencia.");
-
-//lista de precios
-do {
-alert(`MEMORIAS DISPONIBLES:\n
-    4 GIGAS - 6 U$S.
-    8 GIGAS - 11 U$S 
-    16 GIGAS - 14 U$S
-    32 GIGAS - 25 U$S
-    64 GIGAS - 42 U$S
-    128 GIGAS - 70 U$S
-    256 GIGAS . 120 U$S\n`);
-
-  //eleccion
-gigas = +prompt("Ingrese los gigas que desea comprar:");
-
-if (gigas in precios) {
-    const costototal = precios[gigas];
-    
-    // detalle de la compra
-    alert(`Resumen de la compra:\nGIGAS: ${gigas}\nCOSTO TOTAL: ${costototal} DÓLARES`);
-    otraCompra = prompt('¿Desea modificar su elección? (si/no)').toLowerCase();
-    if (otraCompra !== SI) {
-    alert('Gracias por su compra.');
-    break;}
-} else {
-    // si la opcion no es correcta
-    alert("cantitad de gigas no válida. Por favor, elija otra opcion.");
+class Instrumento {
+    constructor(nombre, precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
 }
-} while (true);
+
+function calcularPrecioTotal(instrumento, accesorios) {
+    let total = instrumento.precio;
+    for (let accesorio of accesorios) {
+        total += accesorio.precio;
+    }
+    return total;
+}
+
+function ventas() {
+    // Información del cliente
+    let nombreCliente = prompt("Ingrese su nombre:");
+    // solicitar nombre y apellido
+// saludo 
+alert(`Hola ${nombreCliente}, bienvenido/a !!`);
+
+// Instrumentos disponibles
+let guitarra = new Instrumento("Guitarra", 300000);
+let piano = new Instrumento("Piano", 850000);
+let bajo = new Instrumento("Bajo", 300000);
+let bateria = new Instrumento("Bateria", 700000);
+
+// Arrays para almacenar las selecciones del usuario
+let instrumentosSeleccionados = [];
+let accesoriosSeleccionados = [];
+
+// Seleccionar instrumento
+let opcionInstrumento = prompt(`Instrumentos disponibles:\n1. ${guitarra.nombre} - $${guitarra.precio}\n2. ${piano.nombre} - $${piano.precio}\n3. ${bajo.nombre} - $${bajo.precio}\n2. ${bateria.nombre} - $${bateria.precio}\nSeleccione número del instrumento:`);
+
+let instrumentoSeleccionado;
+    if (opcionInstrumento == '1') {
+        instrumentoSeleccionado = guitarra;
+    } else if (opcionInstrumento == '2') {
+        instrumentoSeleccionado = piano;
+    } else if (opcionInstrumento == '3') {
+        instrumentoSeleccionado = bajo;
+    } else if (opcionInstrumento == '4') {
+        instrumentoSeleccionado = bateria;
+    } else {
+        alert("Opción no válida.");
+        return;
+    }
+instrumentosSeleccionados.push(instrumentoSeleccionado);
+
+// Seleccionar accesorios
+    while (true) {
+        let accesorioNombre = prompt("Ingrese un accesorio (o escriba 'fin' para terminar):");
+        if (accesorioNombre.toLowerCase() === 'fin') {
+            break;
+        }
+        let accesorioPrecio = parseFloat(prompt("Ingrese el precio del accesorio:"));
+        let accesorio = new Instrumento(accesorioNombre, accesorioPrecio);
+        accesoriosSeleccionados.push(accesorio);
+    }
+
+// Calcular precio total
+let precioTotal = calcularPrecioTotal(instrumentoSeleccionado, accesoriosSeleccionados);
+
+// Mostrar información de la transacción
+alert(`\nResumen de la compra:\nCliente: ${nombreCliente}\nInstrumento: ${instrumentoSeleccionado.nombre} - $ ${instrumentoSeleccionado.precio}\nAccesorios:\n${accesoriosSeleccionados.map(a => `- ${a.nombre} - $ ${a.precio}`).join('\n')}\nPrecio Total: $ ${precioTotal}\n\n¡Gracias ${nombreCliente} por su compra!`);
+}
+
+//función principal
+ventas();
